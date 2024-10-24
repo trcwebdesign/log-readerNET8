@@ -4,22 +4,16 @@ using System.Windows.Data;
 
 namespace Probel.LogReader.Converters
 {
-    public class Regex101UriConverter : IValueConverter
-    {
-        #region Methods
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value is string str
-                ? $"https://regex101.com/?regex={str}"
-                : value;
+    public class Regex101UriConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if (value is string regex) {
+                return new Uri($"https://regex101.com/?regex={Uri.EscapeDataString(regex)}");
+            }
+            return null;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
             throw new NotImplementedException();
         }
-
-        #endregion Methods
     }
 }

@@ -365,9 +365,9 @@ namespace Probel.LogReader.ViewModels
             ChangeCount = 0;
         }
 
-        protected override void OnActivate()
+        protected override Task OnActivateAsync(CancellationToken cancellationToken)
         {
-            _eventAggregator.PublishOnUIThread(UiEvent.ShowMenuFilter());
+            _eventAggregator.PublishOnUIThreadAsync(UiEvent.ShowMenuFilter());
             IsTraceVisible
                 = IsDebugVisible
                 = IsInfoVisible
@@ -381,15 +381,17 @@ namespace Probel.LogReader.ViewModels
             ShowPersistenceButtons = _configManager.Get().Ui.ShowLayoutButtons;
 
             IsEmpty = (Days?.Count ?? 0) == 0;
+            return Task.CompletedTask;
         }
 
-        protected override void OnDeactivate(bool close)
+        protected override Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
         {
-            _eventAggregator.PublishOnUIThread(UiEvent.HideMenuFilter());
+            _eventAggregator.PublishOnUIThreadAsync(UiEvent.HideMenuFilter());
             UnregisterListener();
 
             var t1 = Task.Run(() => SaveConfig());
             t1.OnErrorHandle(_ui);
+            return Task.CompletedTask;
         }
 
         public void Cache(IEnumerable<LogRow> logs) => _cachedLogs = logs;
@@ -435,6 +437,11 @@ namespace Probel.LogReader.ViewModels
                 else if (message.Context == null) { FilterApplied = null; }
             }
         }
+        public async Task HandleAsync(UiEvent message, CancellationToken cancellationToken) {
+            if (message.Event == UiEvents.FilterApplied) {
+                if (message.Context is string msg) { FilterApplied = msg; } else if (message.Context == null) { FilterApplied = null; }
+            }
+        }
 
         public void LoadDays(IEnumerable<DateTime> days)
         {
@@ -472,7 +479,7 @@ namespace Probel.LogReader.ViewModels
 
             var t2 = t1.ContinueWith(r =>
             {
-                _eventAggregator.PublishOnUIThread(UiEvent.FilterApplied(string.Empty));
+                _eventAggregator.PublishOnUIThreadAsync(UiEvent.FilterApplied(string.Empty));
                 Logs = new ObservableCollection<LogRow>(r.Result);
             });
             t2.OnErrorHandle(_ui, token, scheduler);

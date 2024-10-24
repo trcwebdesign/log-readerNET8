@@ -65,12 +65,12 @@ namespace Probel.LogReader.ViewModels
                 else { Load(); }
             }
 
-            DeactivateItem(_editFilterBindingsViewModel, true);
+            DeactivateItemAsync(_editFilterBindingsViewModel, true);
 
             if (CurrentRepository != null)
             {
                 _editFilterBindingsViewModel.Load(CurrentRepository);
-                ActivateItem(_editFilterBindingsViewModel);
+                ActivateItemAsync(_editFilterBindingsViewModel);
             }
         }
 

@@ -2,6 +2,7 @@
 using Probel.LogReader.Helpers;
 using Probel.LogReader.Ui;
 using Probel.LogReader.ViewModels;
+using Probel.LogReader.Converters;
 using System;
 using System.Diagnostics;
 using System.Linq;

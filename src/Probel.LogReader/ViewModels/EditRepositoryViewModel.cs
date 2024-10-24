@@ -7,6 +7,8 @@ using Probel.LogReader.Ui;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Probel.LogReader.ViewModels
 {
@@ -97,7 +99,7 @@ namespace Probel.LogReader.ViewModels
             else { _logger.Debug("Current repository is null. Skip save."); }
         }
 
-        protected override void OnDeactivate(bool close) => Repository = new RepositorySettings();
+        protected async Task OnDeactivateAsync(bool close, CancellationToken cancellationToken) => Repository = new RepositorySettings();
 
         private void ActivateColourator(string colouration) => _colourator?.Set(colouration);
 

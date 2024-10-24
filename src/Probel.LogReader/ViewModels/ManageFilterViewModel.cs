@@ -93,13 +93,13 @@ namespace Probel.LogReader.ViewModels
 
         public void ActivateCurrentFilter()
         {
-            DeactivateItem(_editFilterViewModel, true);
+            DeactivateItemAsync(_editFilterViewModel, true);
 
             if (CurrentFilter != null)
             {
                 _editFilterViewModel.SetSubfilters(CurrentFilter);
                 NotifyOfPropertyChange(() => CanCreateSubFilter);
-                ActivateItem(_editFilterViewModel);
+                ActivateItemAsync(_editFilterViewModel);
             }
         }
 
@@ -142,7 +142,7 @@ namespace Probel.LogReader.ViewModels
             {
                 _configManager.SaveAsync(_app);
 
-                _eventAggregator.PublishOnBackgroundThread(UiEvent.RefreshMenus);
+                _eventAggregator.PublishOnBackgroundThreadAsync(UiEvent.RefreshMenus);
                 _userInteraction.NotifySuccess(Strings.Msg_InformFilterSaved);
             });
             t1.OnErrorHandle(_userInteraction);

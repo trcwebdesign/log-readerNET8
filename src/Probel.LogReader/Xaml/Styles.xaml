@@ -8,9 +8,7 @@
                     <DockPanel LastChildFill="True">
                         <Border
                             Padding="4"
-                            Background="#465A7D"
-                            CornerRadius="3,3,0,0"
-                            DockPanel.Dock="Top">
+                            Background="#465A7D" CornerRadius="3,3,0,0" DockPanel.Dock="Top">
                             <ContentControl
                                 HorizontalAlignment="Center"
                                 Content="{TemplateBinding Header}"
@@ -18,10 +16,7 @@
                                 Foreground="#CCFFFFFF" />
                         </Border>
 
-                        <Border
-                            Padding="{TemplateBinding Padding}"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="0,0,2,2">
+                        <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" CornerRadius="0,0,2,2">
                             <ContentControl Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                         </Border>
                     </DockPanel>

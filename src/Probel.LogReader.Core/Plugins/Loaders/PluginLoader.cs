@@ -37,7 +37,7 @@ namespace Probel.LogReader.Core.Plugins.Loaders
                 try
                 {
                     var asmPath = AssemblyName.GetAssemblyName(path);
-                    var assembly = Assembly.Load(asmPath);
+                    var assembly = Assembly.LoadFrom(path);
                     var type = (from t in assembly.GetTypes()
                                 where t.IsClass
                                    && !t.IsAbstract
@@ -46,7 +46,8 @@ namespace Probel.LogReader.Core.Plugins.Loaders
 
                     pluginTypes.Add(dll, type);
                 }
-                catch (InvalidOperationException ex) { throw new InvalidOperationException($"An error occured when searching 'Plugin' class for dll '{dll}'", ex); }
+                //catch (Exception ex) { throw new InvalidOperationException($"An error occured when searching 'Plugin' class for dll '{dll}'", ex); }
+                catch (Exception ex) { }
             }
         }
 

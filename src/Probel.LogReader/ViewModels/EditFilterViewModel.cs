@@ -6,6 +6,8 @@ using Probel.LogReader.Properties;
 using Probel.LogReader.Ui;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Probel.LogReader.ViewModels
@@ -73,16 +75,17 @@ namespace Probel.LogReader.ViewModels
 
         #region Methods
 
-        protected override void OnDeactivate(bool close)
-        {
+        protected override async Task OnDeactivateAsync(bool close, CancellationToken cancellationToken) {
+            
             CurrentSubfilter = null;
-            DeactivateItem(_editSubfilterViewModel, close);
+            DeactivateItemAsync(_editSubfilterViewModel, close);
+            
         }
 
         public void ActivateCurrentSubfilter()
         {
             _editSubfilterViewModel.Load(CurrentSubfilter);
-            ActivateItem(_editSubfilterViewModel);
+            ActivateItemAsync(_editSubfilterViewModel);
         }
 
         public void CreateSubfilter()
@@ -107,7 +110,7 @@ namespace Probel.LogReader.ViewModels
         public void Reset()
         {
             CurrentSubfilter = null;
-            DeactivateItem(_editSubfilterViewModel, true);
+            DeactivateItemAsync(_editSubfilterViewModel, true);
         }
 
         public void SetSubfilters(FilterSettings filter)

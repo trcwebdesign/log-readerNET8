@@ -64,12 +64,13 @@ namespace Probel.LogReader.ViewModels
         #endregion Constructors
 
         #region Properties
-        protected override void OnActivate()
-        {
-            LoadRepositoryMenu();
-            _vmLogsViewModel.Repositories = MenuRepository;
-            ActivateItem(_vmLogsViewModel);
-            base.OnActivate();
+        protected override async Task OnActivateAsync(CancellationToken cancellationToken) {
+            {
+                LoadRepositoryMenu();
+                _vmLogsViewModel.Repositories = MenuRepository;
+                await ActivateItemAsync(_vmLogsViewModel, cancellationToken);
+                await base.OnActivateAsync(cancellationToken);
+            }
         }
         public bool IsFilterVisible
         {
@@ -101,7 +102,7 @@ namespace Probel.LogReader.ViewModels
                 var logs = filter.Filter(_vmLogsViewModel.GetLogRows());
                 _vmLogsViewModel.Cache(logs);
                 _vmLogsViewModel.Filter();
-                _eventAggregator.PublishOnUIThread(UiEvent.FilterApplied(filterName));
+                _eventAggregator.PublishOnUIThreadAsync(UiEvent.FilterApplied(filterName));
             }
         }
 
@@ -157,7 +158,13 @@ namespace Probel.LogReader.ViewModels
                 IsFilterVisible = isVisible;
             }
         }
-
+        public async Task HandleAsync(UiEvent message, CancellationToken cancellationToken) {
+            if (message.Event == UiEvents.RefreshMenus) {
+                LoadMenus();
+            } else if (message.Event == UiEvents.FilterVisibility && message.Context is bool isVisible) {
+                IsFilterVisible = isVisible;
+            }
+        }
         public void LoadMenus()
         {
             try
@@ -203,7 +210,7 @@ namespace Probel.LogReader.ViewModels
                     _vmLogsViewModel.Repositories = MenuRepository;
 
                     _vmLogsViewModel.LoadDays(days);
-                    _eventAggregator.PublishOnUIThread(UiEvent.FilterApplied(string.Empty));
+                    _eventAggregator.PublishOnUIThreadAsync(UiEvent.FilterApplied(string.Empty));
 
                     _vmLogsViewModel.IsFile = plugin.TryGetFile(out var path);
                     _vmLogsViewModel.CanListen = plugin.CanListen;
@@ -212,26 +219,26 @@ namespace Probel.LogReader.ViewModels
             });
             t1.OnErrorHandle(_userInteraction);
 
-            var t2 = t1.ContinueWith(r => ActivateItem(_vmLogsViewModel), token, TaskContinuationOptions.OnlyOnRanToCompletion, scheduler);
+            var t2 = t1.ContinueWith(r => ActivateItemAsync(_vmLogsViewModel), token, TaskContinuationOptions.OnlyOnRanToCompletion, scheduler);
             t2.OnErrorHandle(_userInteraction, token, scheduler);
         }
 
         public void ManageFilterBindings()
         {
             _manageFilterBindingsViewModel.Load();
-            ActivateItem(_manageFilterBindingsViewModel);
+            ActivateItemAsync(_manageFilterBindingsViewModel);
         }
 
         public void ManageFilters()
         {
             _manageFilterViewModel.Load();
-            ActivateItem(_manageFilterViewModel);
+            ActivateItemAsync(_manageFilterViewModel);
         }
 
         public void ManageRepositories()
         {
             _manageRepositoryViewModel.Load();
-            ActivateItem(_manageRepositoryViewModel);
+            ActivateItemAsync(_manageRepositoryViewModel);
         }
 
         #endregion Methods

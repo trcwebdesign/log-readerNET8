@@ -67,7 +67,7 @@ namespace Probel.LogReader
 
         protected override object GetInstance(Type service, string key) => _container.Resolve(service, key);
 
-        protected override void OnStartup(object sender, StartupEventArgs e) => DisplayRootViewFor<MainViewModel>();
+        protected override async void OnStartup(object sender, StartupEventArgs e) => await DisplayRootViewForAsync<MainViewModel>();
 
         #endregion Methods
     }

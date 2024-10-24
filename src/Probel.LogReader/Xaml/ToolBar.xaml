@@ -1,12 +1,6 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <ControlTemplate x:Key="VSBlueToolBarControlTemplate" TargetType="{x:Type ToolBar}">
-        <Grid
-            x:Name="Grid"
-            Margin="3,1,1,1"
-            SnapsToDevicePixels="True">
+        <Grid x:Name="Grid" Margin="3,1,1,1" SnapsToDevicePixels="True">
             <Grid x:Name="OverflowGrid" HorizontalAlignment="Right">
                 <ToggleButton
                     x:Name="OverflowButton"
@@ -26,11 +20,9 @@
                                         <Border
                                             x:Name="Bd"
                                             Background="{TemplateBinding Background}"
-                                            CornerRadius="0,3,3,0"
-                                            SnapsToDevicePixels="True">
+                                            CornerRadius="0,3,3,0" SnapsToDevicePixels="True">
                                             <Canvas
-                                                Width="6"
-                                                Height="7"
+                                                Width="6" Height="7"
                                                 Margin="7,2,2,2"
                                                 HorizontalAlignment="Right"
                                                 VerticalAlignment="Bottom"
@@ -56,7 +48,7 @@
                                 </Setter.Value>
                             </Setter>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding}" Value="true">
+                                <DataTrigger Value="true" Binding="{Binding}">
                                     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -65,8 +57,7 @@
                 </ToggleButton>
                 <Popup
                     x:Name="OverflowPopup"
-                    AllowsTransparency="True"
-                    Focusable="False"
+                    AllowsTransparency="True" Focusable="False"
                     IsOpen="{Binding IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}"
                     Placement="Bottom"
                     PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
@@ -74,17 +65,13 @@
                     <Themes:SystemDropShadowChrome x:Name="Shdw" Color="Transparent">
                         <Border
                             x:Name="ToolBarSubMenuBorder"
-                            Background="#FFEEF5FD"
-                            BorderBrush="#FFB6BDC5"
-                            BorderThickness="1"
+                            Background="#FFEEF5FD" BorderBrush="#FFB6BDC5" BorderThickness="1"
                             RenderOptions.ClearTypeHint="Enabled">
                             <ToolBarOverflowPanel
                                 x:Name="PART_ToolBarOverflowPanel"
                                 Margin="2"
                                 FocusVisualStyle="{x:Null}"
-                                Focusable="True"
-                                KeyboardNavigation.DirectionalNavigation="Cycle"
-                                KeyboardNavigation.TabNavigation="Cycle"
+                                Focusable="True" KeyboardNavigation.DirectionalNavigation="Cycle" KeyboardNavigation.TabNavigation="Cycle"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 WrapWidth="200" />
                         </Border>
@@ -102,7 +89,7 @@
                         <Setter Property="Margin" Value="0,0,11,0" />
                         <Setter Property="CornerRadius" Value="3" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding}" Value="true">
+                            <DataTrigger Value="true" Binding="{Binding}">
                                 <Setter Property="CornerRadius" Value="0" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -112,25 +99,18 @@
                     <Thumb
                         x:Name="ToolBarThumb"
                         Width="10"
-                        Margin="-3,-1,0,0"
-                        Padding="6,5,1,6">
+                        Margin="-3,-1,0,0" Padding="6,5,1,6">
                         <Thumb.Style>
                             <Style TargetType="{x:Type Thumb}">
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type Thumb}">
-                                            <Border
-                                                Padding="{TemplateBinding Padding}"
-                                                Background="Transparent"
-                                                SnapsToDevicePixels="True">
+                                            <Border Padding="{TemplateBinding Padding}" Background="Transparent" SnapsToDevicePixels="True">
                                                 <Rectangle>
                                                     <Rectangle.Fill>
                                                         <DrawingBrush
-                                                            TileMode="Tile"
-                                                            Viewbox="0,0,4,4"
-                                                            ViewboxUnits="Absolute"
-                                                            Viewport="0,0,4,4"
-                                                            ViewportUnits="Absolute">
+                                                            TileMode="Tile" Viewbox="0,0,4,4" ViewboxUnits="Absolute"
+                                                            Viewport="0,0,4,4" ViewportUnits="Absolute">
                                                             <DrawingBrush.Drawing>
                                                                 <DrawingGroup>
                                                                     <GeometryDrawing Brush="White" Geometry="M1,1L1,3 3,3 3,1z" />
@@ -180,7 +160,7 @@
             <Trigger Property="ToolBarTray.IsLocked" Value="True">
                 <Setter TargetName="ToolBarThumb" Property="Visibility" Value="Collapsed" />
             </Trigger>
-            <Trigger SourceName="OverflowPopup" Property="HasDropShadow" Value="True">
+            <Trigger Property="HasDropShadow" Value="True" SourceName="OverflowPopup">
                 <Setter TargetName="Shdw" Property="Margin" Value="0,0,5,5" />
                 <Setter TargetName="Shdw" Property="SnapsToDevicePixels" Value="True" />
                 <Setter TargetName="Shdw" Property="Color" Value="#71000000" />
@@ -199,11 +179,9 @@
                                         <Border
                                             x:Name="Bd"
                                             Background="{TemplateBinding Background}"
-                                            CornerRadius="0,0,3,3"
-                                            SnapsToDevicePixels="True">
+                                            CornerRadius="0,0,3,3" SnapsToDevicePixels="True">
                                             <Canvas
-                                                Width="7"
-                                                Height="6"
+                                                Width="7" Height="6"
                                                 Margin="2,7,2,2"
                                                 HorizontalAlignment="Right"
                                                 VerticalAlignment="Bottom"
@@ -229,7 +207,7 @@
                                 </Setter.Value>
                             </Setter>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding}" Value="true">
+                                <DataTrigger Value="true" Binding="{Binding}">
                                     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
                                 </DataTrigger>
                             </Style.Triggers>

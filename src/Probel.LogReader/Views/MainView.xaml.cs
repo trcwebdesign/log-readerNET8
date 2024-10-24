@@ -3,6 +3,7 @@ using Probel.LogReader.ViewModels;
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -39,8 +40,8 @@ namespace Probel.LogReader.Views
             MessageBox.Show(msg, "Log Reader", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void OnViewWebsite(object sender, RoutedEventArgs e) => Process.Start("https://github.com/jibedoubleve/log-reader");
+        private void OnViewWebsite(object sender, RoutedEventArgs e) => Process.Start(new ProcessStartInfo { FileName = "https://github.com/jibedoubleve/log-reader", UseShellExecute = true }); 
 
-        private void OnViewLicense(object sender, RoutedEventArgs e) => Process.Start("https://github.com/jibedoubleve/log-reader/blob/develop/LICENSE");
+        private void OnViewLicense(object sender, RoutedEventArgs e) => Process.Start(new ProcessStartInfo { FileName = "https://github.com/jibedoubleve/log-reader/blob/develop/LICENSE", UseShellExecute = true }); 
     }
 }

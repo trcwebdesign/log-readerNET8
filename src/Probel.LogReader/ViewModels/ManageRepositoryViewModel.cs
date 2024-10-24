@@ -73,7 +73,7 @@ namespace Probel.LogReader.ViewModels
             {
                 _editRepositoryViewModel.Repository = CurrentRepository;
                 _editRepositoryViewModel.Load();
-                ActivateItem(_editRepositoryViewModel);
+                ActivateItemAsync(_editRepositoryViewModel);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Probel.LogReader.ViewModels
             Repositories.Add(newItem);
             _cachedAppSettings.Repositories.Add(newItem);
 
-            ActivateItem(_editRepositoryViewModel);
+            ActivateItemAsync(_editRepositoryViewModel);
         }
 
         public void DiscardAll()
@@ -114,7 +114,7 @@ namespace Probel.LogReader.ViewModels
             {
                 _configManager.Save(_cachedAppSettings);
 
-                _eventAggregator.PublishOnBackgroundThread(UiEvent.RefreshMenus);
+                _eventAggregator.PublishOnBackgroundThreadAsync(UiEvent.RefreshMenus);
                 _userInteraction.NotifySuccess(Strings.Msg_InformRepositorySaved);
             });
             t1.OnErrorHandle(_userInteraction);
